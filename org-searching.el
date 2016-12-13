@@ -15,9 +15,11 @@
 ;;; ----------------------------------------------------------------------------
 ;; load function `ag/read-from-minibuffer', `ag/search'
 (require 'ag)
+(require 'cl-lib)
 
 (defgroup org-searching nil
-  "Org files searching.")
+  "Org files searching."
+  :group 'org)
 
 (defcustom org-searching-org-root-path "~/Org"
   "The default root path of your Org-mode files."
@@ -44,7 +46,7 @@ prefix, prompts for flags to pass to ag."
     (read-directory-name "Directory: " (expand-file-name "~/Org"))
     ))
   
-  (case org-searching-search-engine
+  (cl-case org-searching-search-engine
     ('ag
      ;; (ag/search string directory :regexp nil :file-type 'org)
      (ag/search string directory
@@ -68,7 +70,7 @@ prefix, prompts for flags to pass to ag."
     (read-directory-name "Directory: " (expand-file-name "~/Org"))
     ))
   
-  (case org-searching-search-engine
+  (cl-case org-searching-search-engine
     ('ag
      (ag/search regexp directory
                 :regexp nil :file-regex ".*\.org"))
@@ -92,7 +94,7 @@ prefix, prompts for flags to pass to ag."
                          (expand-file-name (if current-prefix-arg "~/Org" ".")))
     ))
   
-  (case org-searching-search-engine
+  (cl-case org-searching-search-engine
     ('ag
      (ag/search (concat "^(\\*)+\ .*" string) directory
                 :regexp t :file-regex ".*\.org"))
