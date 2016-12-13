@@ -1,9 +1,9 @@
-;;; org-searching.el --- Searching Org-mode files with search tools.
+;;; org-seek.el --- Searching Org-mode files with search tools.
 
 ;; Author: stardiviner <numbchild@gmail.com>
 ;; Maintainer: stardiviner <numbchild@gmail.com>
 ;; Keywords: org search
-;; URL: https://github.com/stardiviner/org-searching.el
+;; URL: https://github.com/stardiviner/org-seek.el
 ;; Created: 12th Dec 2016
 ;; Version: 0.1.0
 ;; Package-Requires: ((emacs "24.3") (ag "0.48"))
@@ -16,25 +16,25 @@
 (require 'ag)
 (require 'cl-lib)
 
-(defgroup org-searching nil
+(defgroup org-seek nil
   "Org files searching."
   :group 'org)
 
-(defcustom org-searching-org-root-path "~/Org"
+(defcustom org-seek-org-root-path "~/Org"
   "The default root path of your Org-mode files."
   :type 'string
-  :group 'org-searching)
+  :group 'org-seek)
 
-(defcustom org-searching-search-tool 'ag
+(defcustom org-seek-search-tool 'ag
   "Specify the search tool for searching.
 
 The search tool can be: ag, pt, ripgrep, grep, ack."
   :type 'symbol
-  :group 'org-searching)
+  :group 'org-seek)
 
 
 ;;;###autoload
-(defun org-searching-string (string directory)
+(defun org-seek-string (string directory)
   "Full context searching STRING using ag in a given DIRECTORY.
 
 By default STRING is the symbol under point unless called with a
@@ -45,7 +45,7 @@ prefix, prompts for flags to pass to ag."
     (read-directory-name "Directory: " (expand-file-name "~/Org"))
     ))
   
-  (cl-case org-searching-search-tool
+  (cl-case org-seek-search-tool
     ('ag
      ;; (ag/search string directory :regexp nil :file-type 'org)
      (ag/search string directory
@@ -58,7 +58,7 @@ prefix, prompts for flags to pass to ag."
   )
 
 ;;;###autoload
-(defun org-searching-regexp (regexp directory)
+(defun org-seek-regexp (regexp directory)
   "Full context searching REGEXP using ag in a given DIRECTORY.
 
 By default REGEXP is the symbol under point unless called with a
@@ -69,7 +69,7 @@ prefix, prompts for flags to pass to ag."
     (read-directory-name "Directory: " (expand-file-name "~/Org"))
     ))
   
-  (cl-case org-searching-search-tool
+  (cl-case org-seek-search-tool
     ('ag
      (ag/search regexp directory
                 :regexp nil :file-regex ".*\.org"))
@@ -81,7 +81,7 @@ prefix, prompts for flags to pass to ag."
   )
 
 ;;;###autoload
-(defun org-searching-headlines (string directory)
+(defun org-seek-headlines (string directory)
   "Search STRING in Org files headlines using ag in a given DIRECTORY.
 
 By default STRING is the symbol under point unless called with a
@@ -93,7 +93,7 @@ prefix, prompts for flags to pass to ag."
                          (expand-file-name (if current-prefix-arg "~/Org" ".")))
     ))
   
-  (cl-case org-searching-search-tool
+  (cl-case org-seek-search-tool
     ('ag
      (ag/search (concat "^(\\*)+\ .*" string) directory
                 :regexp t :file-regex ".*\.org"))
@@ -115,6 +115,6 @@ prefix, prompts for flags to pass to ag."
 
 ;;; ----------------------------------------------------------------------------
 
-(provide 'org-searching)
+(provide 'org-seek)
 
-;;; org-searching.el ends here
+;;; org-seek.el ends here
