@@ -1,4 +1,4 @@
-;;; org-searching.el --- Searching Org-mode files with search engines.
+;;; org-searching.el --- Searching Org-mode files with search tools.
 
 ;; Author: stardiviner <numbchild@gmail.com>
 ;; Maintainer: stardiviner <numbchild@gmail.com>
@@ -25,10 +25,10 @@
   :type 'string
   :group 'org-searching)
 
-(defcustom org-searching-search-engine 'ag
-  "Specify the search engine for searching.
+(defcustom org-searching-search-tool 'ag
+  "Specify the search tool for searching.
 
-The search engines can be: ag, pt, ripgrep, grep, ack."
+The search tool can be: ag, pt, ripgrep, grep, ack."
   :type 'symbol
   :group 'org-searching)
 
@@ -45,7 +45,7 @@ prefix, prompts for flags to pass to ag."
     (read-directory-name "Directory: " (expand-file-name "~/Org"))
     ))
   
-  (cl-case org-searching-search-engine
+  (cl-case org-searching-search-tool
     ('ag
      ;; (ag/search string directory :regexp nil :file-type 'org)
      (ag/search string directory
@@ -69,7 +69,7 @@ prefix, prompts for flags to pass to ag."
     (read-directory-name "Directory: " (expand-file-name "~/Org"))
     ))
   
-  (cl-case org-searching-search-engine
+  (cl-case org-searching-search-tool
     ('ag
      (ag/search regexp directory
                 :regexp nil :file-regex ".*\.org"))
@@ -93,7 +93,7 @@ prefix, prompts for flags to pass to ag."
                          (expand-file-name (if current-prefix-arg "~/Org" ".")))
     ))
   
-  (cl-case org-searching-search-engine
+  (cl-case org-searching-search-tool
     ('ag
      (ag/search (concat "^(\\*)+\ .*" string) directory
                 :regexp t :file-regex ".*\.org"))
