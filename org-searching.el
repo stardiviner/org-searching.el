@@ -1,5 +1,4 @@
 ;;; org-searching.el --- Searching Org-mode files with search engines.
-;;; -*- coding: utf-8 -*-
 
 ;; Author: stardiviner <numbchild@gmail.com>
 ;; Maintainer: stardiviner <numbchild@gmail.com>
