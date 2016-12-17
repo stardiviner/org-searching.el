@@ -2,13 +2,15 @@
 
 ;; Author: stardiviner <numbchild@gmail.com>
 ;; Maintainer: stardiviner <numbchild@gmail.com>
-;; Keywords: org search
+;; Keywords: org search ag pt
 ;; URL: https://github.com/stardiviner/org-seek.el
 ;; Created: 12th Dec 2016
-;; Version: 0.1.0
+;; Version: 0.1.1
 ;; Package-Requires: ((emacs "24.3") (ag "0.48"))
 
 ;;; Commentary:
+
+;; You need to install at least one of searching tools: ag, pt, grep etc.
 
 ;;; Code:
 ;;; ----------------------------------------------------------------------------
@@ -20,7 +22,7 @@
   "Org files searching."
   :group 'org)
 
-(defcustom org-seek-org-root-path "~/Org"
+(defcustom org-seek-org-root-path org-directory
   "The default root path of your Org-mode files."
   :type 'string
   :group 'org-seek)
@@ -33,6 +35,10 @@ The search tool can be: ag, pt, ripgrep, grep, ack."
   :group 'org-seek)
 
 
+(autoload 'ag/search "ag")
+(autoload 'pt-regexp "pt")
+(autoload 'ripgrep-regexp "ripgrep")
+
 ;;;###autoload
 (defun org-seek-string (string directory)
   "Full context searching STRING using ag in a given DIRECTORY.
@@ -42,7 +48,7 @@ prefix, prompts for flags to pass to ag."
   (interactive
    (list
     (read-from-minibuffer "Search string in Org:" (thing-at-point 'symbol))
-    (read-directory-name "Directory: " (expand-file-name "~/Org"))
+    (read-directory-name "Directory: " (expand-file-name org-seek-org-root-path))
     ))
   
   (cl-case org-seek-search-tool
@@ -66,7 +72,7 @@ prefix, prompts for flags to pass to ag."
   (interactive
    (list
     (read-from-minibuffer "Search regexp in Org:" (thing-at-point 'symbol))
-    (read-directory-name "Directory: " (expand-file-name "~/Org"))
+    (read-directory-name "Directory: " (expand-file-name org-seek-org-root-path))
     ))
   
   (cl-case org-seek-search-tool
@@ -90,7 +96,7 @@ prefix, prompts for flags to pass to ag."
    (list
     (read-from-minibuffer "Search headlines in Org:" (thing-at-point 'symbol))
     (read-directory-name "Directory: "
-                         (expand-file-name (if current-prefix-arg "~/Org" ".")))
+                         (expand-file-name (if current-prefix-arg org-seek-org-root-path ".")))
     ))
   
   (cl-case org-seek-search-tool
