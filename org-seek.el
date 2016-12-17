@@ -2,13 +2,15 @@
 
 ;; Author: stardiviner <numbchild@gmail.com>
 ;; Maintainer: stardiviner <numbchild@gmail.com>
-;; Keywords: org search
+;; Keywords: org search ag pt
 ;; URL: https://github.com/stardiviner/org-seek.el
 ;; Created: 12th Dec 2016
 ;; Version: 0.1.0
 ;; Package-Requires: ((emacs "24.3") (ag "0.48"))
 
 ;;; Commentary:
+
+;; You need to install at least one of searching tools: ag, pt, grep etc.
 
 ;;; Code:
 ;;; ----------------------------------------------------------------------------
@@ -32,6 +34,10 @@ The search tool can be: ag, pt, ripgrep, grep, ack."
   :type 'symbol
   :group 'org-seek)
 
+
+(autoload 'ag/search "ag")
+(autoload 'pt-regexp "pt")
+(autoload 'ripgrep-regexp "ripgrep")
 
 ;;;###autoload
 (defun org-seek-string (string directory)
