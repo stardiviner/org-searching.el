@@ -5,7 +5,7 @@
 ;; Keywords: org search ag pt
 ;; URL: https://github.com/stardiviner/org-seek.el
 ;; Created: 12th Dec 2016
-;; Version: 0.1.0
+;; Version: 0.1.1
 ;; Package-Requires: ((emacs "24.3") (ag "0.48"))
 
 ;;; Commentary:
