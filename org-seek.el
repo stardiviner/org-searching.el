@@ -20,7 +20,7 @@
   "Org files searching."
   :group 'org)
 
-(defcustom org-seek-org-root-path "~/Org"
+(defcustom org-seek-org-root-path org-directory
   "The default root path of your Org-mode files."
   :type 'string
   :group 'org-seek)
@@ -42,7 +42,7 @@ prefix, prompts for flags to pass to ag."
   (interactive
    (list
     (read-from-minibuffer "Search string in Org:" (thing-at-point 'symbol))
-    (read-directory-name "Directory: " (expand-file-name "~/Org"))
+    (read-directory-name "Directory: " (expand-file-name org-seek-org-root-path))
     ))
   
   (cl-case org-seek-search-tool
@@ -66,7 +66,7 @@ prefix, prompts for flags to pass to ag."
   (interactive
    (list
     (read-from-minibuffer "Search regexp in Org:" (thing-at-point 'symbol))
-    (read-directory-name "Directory: " (expand-file-name "~/Org"))
+    (read-directory-name "Directory: " (expand-file-name org-seek-org-root-path))
     ))
   
   (cl-case org-seek-search-tool
@@ -90,7 +90,7 @@ prefix, prompts for flags to pass to ag."
    (list
     (read-from-minibuffer "Search headlines in Org:" (thing-at-point 'symbol))
     (read-directory-name "Directory: "
-                         (expand-file-name (if current-prefix-arg "~/Org" ".")))
+                         (expand-file-name (if current-prefix-arg org-seek-org-root-path ".")))
     ))
   
   (cl-case org-seek-search-tool
