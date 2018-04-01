@@ -34,6 +34,12 @@ The search tool can be: ag, pt, ripgrep, grep, ack."
   :type 'symbol
   :group 'org-seek)
 
+(defcustom org-seek-file-name-pattern ".*\\.org$"
+  "The regex to limit searches to org files only.
+
+Only used with ag/search as the :file-regex param."
+  :type 'regexp
+  :group 'org-seek)
 
 (autoload 'ag/search "ag")
 (autoload 'pt-regexp "pt")
@@ -55,7 +61,7 @@ prefix, prompts for flags to pass to ag."
     ('ag
      ;; (ag/search string directory :regexp nil :file-type 'org)
      (ag/search string directory
-                :regexp nil :file-regex ".*\.org"))
+                :regexp nil :file-regex org-seek-file-name-pattern))
     ('pt
      (pt-regexp string directory))
     ('ripgrep
@@ -78,7 +84,7 @@ prefix, prompts for flags to pass to ag."
   (cl-case org-seek-search-tool
     ('ag
      (ag/search regexp directory
-                :regexp nil :file-regex ".*\.org"))
+                :regexp nil :file-regex org-seek-file-name-pattern))
     ('pt
      (pt-regexp regexp directory))
     ('ripgrep
@@ -102,7 +108,7 @@ prefix, prompts for flags to pass to ag."
   (cl-case org-seek-search-tool
     ('ag
      (ag/search (concat "^(\\*)+\ .*" string) directory
-                :regexp t :file-regex ".*\.org"))
+                :regexp t :file-regex org-seek-file-name-pattern))
     ('pt
      (pt-regexp (concat "^(\\*)+\ .*" string) directory))
     ('ripgrep
